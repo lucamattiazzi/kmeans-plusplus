@@ -1,18 +1,25 @@
 // not a real test!
 // also since it's kind of random, not so easy to run a test
 const Clusterer = require('./index.js')
+const SIDE = 10
 
-const side = 10
+const testClusterer = (dimensions, points, clusters) => {
+	console.log('--------')
+	console.log(
+		`RUNNING TEST WITH ${points} ${dimensions}-dimensional points, in ${clusters} clusters.`,
+	)
+	const generatePoint = () => Array.from({ length: dimensions }, () => Math.random() * SIDE)
+	const data = Array.from({ length: points }, generatePoint)
 
-const data = Array.from({ length: 10 }, () => [
-	Math.floor(Math.random() * side),
-	Math.floor(Math.random() * side),
-])
+	const clusterer = new Clusterer(data)
 
-const clusterer = new Clusterer(data)
+	const { centroids, attributions, iterations } = clusterer.clusterize(clusters)
 
-const { centroids, attributions, iterations } = clusterer.clusterize(4)
+	console.log('points', data)
+	console.log('attributions', attributions)
+	console.log('centroids', centroids)
+	console.log('--------')
+}
 
-console.log('iterations', iterations)
-console.log('attributions', attributions)
-console.log('centroids', centroids)
+testClusterer(2, 30, 4)
+testClusterer(1, 10, 2)
