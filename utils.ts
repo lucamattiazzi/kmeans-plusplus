@@ -1,4 +1,7 @@
-export type Point = [number, number]
+export type Point = Array<number>
+type Generator = (val: any, idx: number) => any
+
+function noop() {}
 
 export function sumArray(arr: number[]): number {
 	return arr.reduce((a, v) => a + v, 0)
@@ -17,13 +20,12 @@ export function filterIdxs(arr: number[], val: number): number[] {
 }
 
 export function clusterCentroid(cluster: Array<Point>): Point {
-	const [xSum, ySum] = cluster.reduce(
-		(acc, point) => {
-			return [acc[0] + point[0], acc[1] + point[1]]
-		},
-		[0, 0],
-	)
-	return [xSum / cluster.length, ySum / cluster.length]
+	let sums = arrayFrom({ length: cluster.length }, 0)
+	for (let i = 0; i < cluster.length; i++) {
+		const point = cluster[i]
+		sums[i] += point[i]
+	}
+	return sums.map(sum => sum / cluster.length)
 }
 
 export function chooseDistribution(distr: number[]) {
@@ -40,9 +42,8 @@ export function chooseDistribution(distr: number[]) {
 
 export function sqDistance(p1: Point): (p: Point) => number {
 	return function(p2: Point): number {
-		const dx = p1[0] - p2[0]
-		const dy = p1[1] - p2[1]
-		return dx * dx + dy * dy
+		const sqDistances = p1.map((_, i: number): number => (p1[i] - p2[i]) * (p1[i] - p2[i]))
+		return sumArray(sqDistances)
 	}
 }
 
@@ -55,12 +56,13 @@ export function getClosestPoint(p1: Point, pArray: Array<Point>): number {
 
 export function arrayFrom(
 	array: Array<any> | { length: number },
-	generator: (_: any, idx: number) => any = () => undefined,
+	generator: number | Generator = noop,
 ): Array<any> {
 	const newArray = []
 	for (let i = 0; i < array.length; i++) {
 		const oldVal = array[i]
-		newArray.push(generator(oldVal, i))
+		const newVal = typeof generator === 'function' ? generator(oldVal, i) : generator
+		newArray.push(newVal)
 	}
 	return newArray
 }

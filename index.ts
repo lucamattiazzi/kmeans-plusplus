@@ -25,7 +25,7 @@ class Clusterer {
 	}
 
 	isNotPoint(p: Point): boolean {
-		return p.length !== 2 || typeof p[0] !== 'number' || typeof p[1] !== 'number'
+		return p.length !== 2 || p.some(v => typeof v !== 'number')
 	}
 
 	validateData(data: Array<Point>): boolean {

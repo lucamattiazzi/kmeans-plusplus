@@ -1,3 +1,4 @@
+function noop() { }
 function sumArray(arr) {
     return arr.reduce(function (a, v) { return a + v; }, 0);
 }
@@ -16,10 +17,12 @@ function filterIdxs(arr, val) {
 }
 exports.filterIdxs = filterIdxs;
 function clusterCentroid(cluster) {
-    var _a = cluster.reduce(function (acc, point) {
-        return [acc[0] + point[0], acc[1] + point[1]];
-    }, [0, 0]), xSum = _a[0], ySum = _a[1];
-    return [xSum / cluster.length, ySum / cluster.length];
+    var sums = arrayFrom({ length: cluster.length }, 0);
+    for (var i = 0; i < cluster.length; i++) {
+        var point = cluster[i];
+        sums[i] += point[i];
+    }
+    return sums.map(function (sum) { return sum / cluster.length; });
 }
 exports.clusterCentroid = clusterCentroid;
 function chooseDistribution(distr) {
@@ -37,9 +40,8 @@ function chooseDistribution(distr) {
 exports.chooseDistribution = chooseDistribution;
 function sqDistance(p1) {
     return function (p2) {
-        var dx = p1[0] - p2[0];
-        var dy = p1[1] - p2[1];
-        return dx * dx + dy * dy;
+        var sqDistances = p1.map(function (_, i) { return (p1[i] - p2[i]) * (p1[i] - p2[i]); });
+        return sumArray(sqDistances);
     };
 }
 exports.sqDistance = sqDistance;
@@ -51,11 +53,12 @@ function getClosestPoint(p1, pArray) {
 }
 exports.getClosestPoint = getClosestPoint;
 function arrayFrom(array, generator) {
-    if (generator === void 0) { generator = function () { return undefined; }; }
+    if (generator === void 0) { generator = noop; }
     var newArray = [];
     for (var i = 0; i < array.length; i++) {
         var oldVal = array[i];
-        newArray.push(generator(oldVal, i));
+        var newVal = typeof generator === 'function' ? generator(oldVal, i) : generator;
+        newArray.push(newVal);
     }
     return newArray;
 }
