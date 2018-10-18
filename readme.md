@@ -4,10 +4,11 @@
 
 This library is:
 
-- Dependancy free!
-- Typescript compatible!!
-- Isomorphic!!!
-- Palm oil free!!!!
+- Dependency free!
+- Typescript!
+- Isomorphic!
+- Palm oil free!
+- Provided with 6 amazing features (TODO)
 
 ## Install
 
