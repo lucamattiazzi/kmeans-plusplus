@@ -17,10 +17,13 @@ function filterIdxs(arr, val) {
 }
 exports.filterIdxs = filterIdxs;
 function clusterCentroid(cluster) {
-    var sums = arrayFrom({ length: cluster.length }, 0);
+    var length = cluster[0].length;
+    var sums = arrayFrom({ length: length }, 0);
     for (var i = 0; i < cluster.length; i++) {
         var point = cluster[i];
-        sums[i] += point[i];
+        for (var j = 0; j < length; j++) {
+            sums[j] += point[j];
+        }
     }
     return sums.map(function (sum) { return sum / cluster.length; });
 }
@@ -38,16 +41,13 @@ function chooseDistribution(distr) {
     return idx;
 }
 exports.chooseDistribution = chooseDistribution;
-function sqDistance(p1) {
-    return function (p2) {
-        var sqDistances = p1.map(function (_, i) { return (p1[i] - p2[i]) * (p1[i] - p2[i]); });
-        return sumArray(sqDistances);
-    };
+function sqDistance(p1, p2) {
+    var sqDistances = p1.map(function (_, i) { return (p1[i] - p2[i]) * (p1[i] - p2[i]); });
+    return sumArray(sqDistances);
 }
 exports.sqDistance = sqDistance;
-function getClosestPoint(p1, pArray) {
-    var distancer = sqDistance(p1);
-    var distances = pArray.map(distancer);
+function getClosestPoint(p1, pArray, distanceFn) {
+    var distances = pArray.map(function (p2) { return distanceFn(p1, p2); });
     var minIdx = findMinIdx(distances);
     return minIdx;
 }

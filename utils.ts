@@ -1,4 +1,15 @@
 export type Point = Array<number>
+export type Iteration = {
+	centroids: Array<Point>
+	attributions: Array<number>
+}
+export type Result = {
+	centroids: Array<Point>
+	attributions: Array<number>
+	iterations: Array<Iteration>
+}
+export type DistanceFunction = (p1: number[], p2: number[]) => number
+
 type Generator = (val: any, idx: number) => any
 
 function noop() {}
@@ -20,10 +31,13 @@ export function filterIdxs(arr: number[], val: number): number[] {
 }
 
 export function clusterCentroid(cluster: Array<Point>): Point {
-	let sums = arrayFrom({ length: cluster.length }, 0)
+	const length = cluster[0].length
+	const sums = arrayFrom({ length }, 0)
 	for (let i = 0; i < cluster.length; i++) {
 		const point = cluster[i]
-		sums[i] += point[i]
+		for (let j = 0; j < length; j++) {
+			sums[j] += point[j]
+		}
 	}
 	return sums.map(sum => sum / cluster.length)
 }
@@ -40,16 +54,17 @@ export function chooseDistribution(distr: number[]) {
 	return idx
 }
 
-export function sqDistance(p1: Point): (p: Point) => number {
-	return function(p2: Point): number {
-		const sqDistances = p1.map((_, i: number): number => (p1[i] - p2[i]) * (p1[i] - p2[i]))
-		return sumArray(sqDistances)
-	}
+export function sqDistance(p1: Point, p2: Point): number {
+	const sqDistances = p1.map((_, i: number): number => (p1[i] - p2[i]) * (p1[i] - p2[i]))
+	return sumArray(sqDistances)
 }
 
-export function getClosestPoint(p1: Point, pArray: Array<Point>): number {
-	const distancer = sqDistance(p1)
-	const distances = pArray.map(distancer)
+export function getClosestPoint(
+	p1: Point,
+	pArray: Array<Point>,
+	distanceFn: DistanceFunction,
+): number {
+	const distances = pArray.map(p2 => distanceFn(p1, p2))
 	const minIdx = findMinIdx(distances)
 	return minIdx
 }

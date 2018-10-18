@@ -8,7 +8,7 @@ This library is:
 - Typescript!
 - Isomorphic!
 - Palm oil free!
-- Provided with 6 amazing features (TODO)
+- Work with multidimensional points (euclidean distance)
 
 ## Install
 
@@ -45,7 +45,7 @@ Default: `true`
 
 Set to false if you want to skip the data validation(risky!)
 
-### clusterer.clusterize([clusters, maxIterations])
+### clusterer.clusterize([clusters, maxIterations, distanceFn]) => { centroids, attributions, iterations }
 
 ##### clusters
 
@@ -60,6 +60,38 @@ Type: `number`<br>
 Default: 1000
 
 Max number of iterations executed if convergence is not achieved
+
+##### distanceFn
+
+Type: `function: (number[], number[]) => number`<br>
+Default: `squared euclidean`
+
+```
+(p1, p2) => {
+  const distances = p1.map((_, i) => (p1[i] - p2[i]) * (p1[i] - p2[i]))
+  return distances / p1.length
+}
+```
+
+Function used to measure distance between points when finding nearest cluster and seeding clusters
+
+##### centroids
+
+Type: `Array<Array<number>>`
+
+Final centroids
+
+##### attributions
+
+Type: `Array<number>`
+
+Array of the indices of the final cluster relative to each starting point
+
+##### iterations
+
+Type: `Array<{ centroids: Array<Array<number>>, attributions: Array<number> }>`
+
+Each iteration of the algorithm, sorted
 
 ## License
 

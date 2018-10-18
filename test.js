@@ -4,15 +4,15 @@ const Clusterer = require('./index.js')
 
 const side = 10
 
-const data = Array.from({ length: 100 }, () => [
+const data = Array.from({ length: 10 }, () => [
 	Math.floor(Math.random() * side),
 	Math.floor(Math.random() * side),
 ])
 
 const clusterer = new Clusterer(data)
 
-const { clusters, attributions, iterations } = clusterer.clusterize(10)
+const { centroids, attributions, iterations } = clusterer.clusterize(4)
 
+console.log('iterations', iterations)
 console.log('attributions', attributions)
-console.log('clusters', clusters)
-console.log('iterations ', iterations)
+console.log('centroids', centroids)
