@@ -3,7 +3,7 @@
 		"target": "ES5",
 		"module": "commonjs",
 		"declaration": true,
-		"outDir": "./",
+		"outDir": "./dist",
 		"removeComments": true
 	},
 	"files": [
