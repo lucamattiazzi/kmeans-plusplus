@@ -66,11 +66,3 @@ export function arrayFrom(
 	}
 	return newArray
 }
-
-// module.exports = {
-// 	filterIdxs,
-// 	clusterCentroid,
-// 	chooseDistribution,
-// 	sqDistance,
-// 	getClosestPoint,
-// }

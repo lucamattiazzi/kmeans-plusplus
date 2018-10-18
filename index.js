@@ -55,6 +55,7 @@ var Clusterer = (function () {
         for (var i = 0; i < this.data.length; i++) {
             var point = this.data[i];
             var closestIdx = utils_1.getClosestPoint(point, centroids);
+            console.log('closestIdx', closestIdx);
             var previousAttribution = attributions[i];
             newAttributions.push(closestIdx);
             hasChanged = hasChanged || previousAttribution !== closestIdx;
@@ -79,9 +80,9 @@ var Clusterer = (function () {
             throw new Error('Wrong number of clusters!');
         }
         var startingCentroids = this.findNextCentroid([], centroidsNumber);
-        var initialAssignments = utils_1.arrayFrom({ length: this.data.length });
-        var firstIteration = { centroids: startingCentroids, attributions: initialAssignments };
-        var _a = this.kmeans(startingCentroids, initialAssignments, [firstIteration], 0, maxIterations), centroids = _a.centroids, attributions = _a.attributions, iterations = _a.iterations;
+        var startingAttributions = utils_1.arrayFrom({ length: this.data.length });
+        var startingIteration = { centroids: startingCentroids, attributions: startingAttributions };
+        var _a = this.kmeans(startingCentroids, startingAttributions, [startingIteration], 0, maxIterations), centroids = _a.centroids, attributions = _a.attributions, iterations = _a.iterations;
         var result = { centroids: centroids, attributions: attributions };
         return { result: result, iterations: iterations };
     };

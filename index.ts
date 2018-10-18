@@ -84,6 +84,7 @@ class Clusterer {
 		for (let i = 0; i < this.data.length; i++) {
 			const point = this.data[i]
 			const closestIdx = getClosestPoint(point, centroids)
+			console.log('closestIdx', closestIdx)
 			const previousAttribution = attributions[i]
 			newAttributions.push(closestIdx)
 			hasChanged = hasChanged || previousAttribution !== closestIdx
@@ -110,12 +111,12 @@ class Clusterer {
 			throw new Error('Wrong number of clusters!')
 		}
 		const startingCentroids = this.findNextCentroid([], centroidsNumber)
-		const initialAssignments = arrayFrom({ length: this.data.length })
-		const firstIteration = { centroids: startingCentroids, attributions: initialAssignments }
+		const startingAttributions = arrayFrom({ length: this.data.length })
+		const startingIteration = { centroids: startingCentroids, attributions: startingAttributions }
 		const { centroids, attributions, iterations } = this.kmeans(
 			startingCentroids,
-			initialAssignments,
-			[firstIteration],
+			startingAttributions,
+			[startingIteration],
 			0,
 			maxIterations,
 		)
