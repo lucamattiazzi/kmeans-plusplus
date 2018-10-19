@@ -9,7 +9,7 @@ var Clusterer = (function () {
         this.data = data;
     }
     Clusterer.prototype.isNotPoint = function (p) {
-        return p.length === 0 || p.some(function (v) { return typeof v !== 'number'; });
+        return p.length === 0 || p.some(function (v) { return typeof v !== 'number' || isNaN(v); });
     };
     Clusterer.prototype.validateData = function (data) {
         if (data.length === 0)

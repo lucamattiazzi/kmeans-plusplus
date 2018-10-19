@@ -23,7 +23,7 @@ export class Clusterer {
 	}
 
 	isNotPoint(p: Point): boolean {
-		return p.length === 0 || p.some(v => typeof v !== 'number')
+		return p.length === 0 || p.some(v => typeof v !== 'number' || isNaN(v))
 	}
 
 	validateData(data: Array<Point>): boolean {
