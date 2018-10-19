@@ -1,6 +1,6 @@
 {
 	"name": "kmeans-plusplus",
-	"version": "0.3.1",
+	"version": "0.4.2",
 	"description": "kmeans plus plus, on typescript!",
 	"license": "MIT",
 	"repository": "YeasterEgg/kmeans-plusplus",
@@ -20,8 +20,9 @@
 		"kmeans",
 		"clustering"
 	],
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
+	"main": "dist/index.js",
+	"files": ["dist/"],
+	"types": "dist/index.d.ts",
 	"dependencies": {},
 	"devDependencies": {
 		"@types/node": "^10.12.0",
