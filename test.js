@@ -1,6 +1,6 @@
 // not a real test!
 // also since it's kind of random, not so easy to run a test
-const Clusterer = require('./index.js')
+const { Clusterer } = require('./dist/index.js')
 const SIDE = 10
 
 const testClusterer = (dimensions, points, clusters) => {
@@ -21,5 +21,5 @@ const testClusterer = (dimensions, points, clusters) => {
 	console.log('--------')
 }
 
-testClusterer(2, 30, 4)
+testClusterer(2, 100, 10)
 testClusterer(1, 10, 2)

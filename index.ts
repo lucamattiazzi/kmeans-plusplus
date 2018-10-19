@@ -14,7 +14,7 @@ import {
 const DEF_CENTROIDS = 3
 const DEF_ITERATIONS = 1e3
 
-export default class Clusterer {
+export class Clusterer {
 	data: Array<Point>
 
 	constructor(data: Array<Point>, validate: boolean = true) {

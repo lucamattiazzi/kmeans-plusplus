@@ -1,5 +1,5 @@
 import { Point, Iteration, Result, DistanceFunction } from './utils';
-export default class Clusterer {
+export declare class Clusterer {
     data: Array<Point>;
     constructor(data: Array<Point>, validate?: boolean);
     isNotPoint(p: Point): boolean;

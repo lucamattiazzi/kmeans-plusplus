@@ -86,4 +86,4 @@ var Clusterer = (function () {
     };
     return Clusterer;
 })();
-exports.default = Clusterer;
+exports.Clusterer = Clusterer;

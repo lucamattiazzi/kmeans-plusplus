@@ -1,7 +1,7 @@
 {
 	"name": "kmeans-plusplus",
-	"version": "0.4.2",
-	"description": "kmeans plus plus, on typescript!",
+	"version": "0.4.3",
+	"description": "kmeans plus plus, in typescript!",
 	"license": "MIT",
 	"repository": "YeasterEgg/kmeans-plusplus",
 	"author": {
